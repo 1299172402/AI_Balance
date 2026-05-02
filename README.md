@@ -24,3 +24,28 @@ make run-native
 ```
 
 服务默认在 `http://localhost:8080` 启动。
+
+### Docker 运行
+
+从 GitHub Container Registry 拉取并运行：
+
+```bash
+# 拉取镜像
+docker pull ghcr.io/1299172402/ai_balance:latest
+
+# 运行容器（前台，Ctrl+C 退出）
+docker run --rm -p 8080:8080 ghcr.io/1299172402/ai_balance
+```
+
+> 国内用户可使用南京大学镜像加速：
+> ```bash
+> docker pull ghcr.nju.edu.cn/1299172402/ai_balance:latest
+> docker run --rm -p 8080:8080 ghcr.nju.edu.cn/1299172402/ai_balance
+> ```
+
+也可通过 Makefile 一键构建并运行：
+
+```bash
+make build-docker       # 构建镜像（默认源）
+make run-docker         # 运行容器
+```

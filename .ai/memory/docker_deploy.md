@@ -13,6 +13,25 @@
 | `make run-docker` | 运行容器（前台，`Ctrl+C` 退出） |
 | `make run-native` | 本地直接 `go run main.go` |
 
+## 镜像拉取
+
+| 源 | 地址 |
+|------|------|
+| GitHub Container Registry | `ghcr.io/1299172402/ai_balance:latest` |
+| 南京大学镜像（国内加速） | `ghcr.nju.edu.cn/1299172402/ai_balance:latest` |
+
+运行容器：
+
+```bash
+docker run --rm -p 8080:8080 ghcr.io/1299172402/ai_balance
+```
+
+国内用户：
+
+```bash
+docker run --rm -p 8080:8080 ghcr.nju.edu.cn/1299172402/ai_balance
+```
+
 ## Dockerfile 要点
 
 - **多阶段构建**：Stage 1 用 `golang:1.26-alpine` 编译，Stage 2 用 `scratch` 运行
