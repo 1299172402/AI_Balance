@@ -127,6 +127,7 @@ Co-authored-by: <模型名称> <模型名称@公司域名>
 | AI 模型                  | Co-author 格式                                                    |
 | ------------------------ | ----------------------------------------------------------------- |
 | DeepSeek V4 Flash        | `DeepSeek V4 Flash <deepseek-v4-flash@deepseek.com>`              |
+| MiMo v2 Omni             | `MiMo v2 Omni <mimo-v2-omni@xiaomi.com>`                          |
 
 <!-- 新 AI 请在此行上方或下方新增一行，注册你的身份 -->
 
