@@ -29,9 +29,9 @@
 ├── go.mod                          # Go 模块定义
 ├── .github/
 │   ├── copilot-instructions.md     # ← 本文件
-│   └── workflows/docker-publish.yml  # CI/CD → ghcr.io
+│   └── instructions/               # 指令文件
+│       └── commit.instructions.md  # Commit 规范 + AI 身份注册表
 ├── .ai/
-│   ├── commit.md                   # Commit 规范 + AI 身份注册表
 │   └── memory/                     # 开发备忘
 │       ├── go_environment.md       # Go 环境与命令
 │       ├── docker_deploy.md        # Docker 本地构建
@@ -53,10 +53,10 @@
 
 ## ✅ 提交规范
 
-每次 `git commit` **必须**遵守以下规则（详见 `.ai/commit.md`）：
+每次 `git commit` **必须**遵守以下规则（详见 `.github/instructions/commit.instructions.md`，VS Code 中按需自动加载）：
 
 1. 格式：`<type>: <subject>` + Description（中文）
-2. **必须**添加 `Co-authored-by:`，身份从 `.ai/commit.md` 已注册表格中选择
+2. **必须**添加 `Co-authored-by:`，身份从 `.github/instructions/commit.instructions.md` 已注册表格中选择
 3. 首次见到的 AI **必须先注册自己**到表格中
 
 ## 📖 开发备忘
