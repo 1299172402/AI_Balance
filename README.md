@@ -1,5 +1,7 @@
 # AI Balance
 
+> 🤖 AI 贡献者：开始工作前请先查阅 `.ai/` 目录下的规范与备忘。
+
 一个轻量级的 Go HTTP 服务项目，提供 AI platform 的 token 余额查询接口。
 
 ---
