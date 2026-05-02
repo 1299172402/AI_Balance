@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/1299172402/AI_Balance/deepseek"
+	"github.com/1299172402/AI_Balance/platform"
 )
 
 // Response 通用响应结构体
@@ -33,8 +36,17 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/ping", pingHandler)
+	// 使用显式 ServeMux，支持 Go 1.22+ 的增强路由模式
+	mux := http.NewServeMux()
+
+	// 注册基础路由
+	mux.HandleFunc("/", rootHandler)
+	mux.HandleFunc("GET /ping", pingHandler)
+
+	// 注册平台子路由（deepseek）
+	deepseekClient := deepseek.NewClient()
+	platform.RegisterRoutes(mux, deepseekClient)
+
 	log.Println("Server starting on :8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }

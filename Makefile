@@ -10,4 +10,4 @@ run-docker:
 	docker run --rm -p 8080:8080 ai-balance
 
 run-native:
-	go run main.go
+	bash -c 'set -a && source .env && go run main.go'
