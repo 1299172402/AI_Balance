@@ -1,0 +1,409 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "AI Balance API",
+        "description": "多 AI 平台 Token 余额与用量查询接口",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "本地开发"
+        }
+    ],
+    "paths": {
+        "/ping": {
+            "get": {
+                "summary": "健康检查",
+                "operationId": "ping",
+                "responses": {
+                    "200": {
+                        "description": "服务正常",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                },
+                                "example": {
+                                    "code": 0,
+                                    "message": "pong",
+                                    "data": null
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{platform}/balance": {
+            "get": {
+                "summary": "查询余额",
+                "description": "获取指定平台的钱包余额（合并所有钱包）",
+                "operationId": "getBalance",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "deepseek"
+                        },
+                        "description": "平台名称"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Balance"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    }
+                }
+            }
+        },
+        "/{platform}/usage/tokens": {
+            "get": {
+                "summary": "查询 Token 用量",
+                "description": "获取指定平台某月的 Token 消耗（汇总 + 每日明细，按模型分组）",
+                "operationId": "getTokenUsage",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "deepseek"
+                        },
+                        "description": "平台名称"
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 12,
+                            "example": 5
+                        },
+                        "description": "月份（1-12），缺省为当前月"
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 2020,
+                            "example": 2026
+                        },
+                        "description": "年份，缺省为当前年"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/TokenUsage"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    }
+                }
+            }
+        },
+        "/{platform}/usage/cost": {
+            "get": {
+                "summary": "查询费用",
+                "description": "获取指定平台某月的费用消耗（汇总 + 每日明细，按模型分组）",
+                "operationId": "getCostUsage",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "deepseek"
+                        },
+                        "description": "平台名称"
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 12,
+                            "example": 5
+                        },
+                        "description": "月份（1-12），缺省为当前月"
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 2020,
+                            "example": 2026
+                        },
+                        "description": "年份，缺省为当前年"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/CostUsage"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SuccessResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "nullable": true
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "example": -1
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "查询余额失败: ..."
+                    },
+                    "data": {
+                        "nullable": true
+                    }
+                }
+            },
+            "Balance": {
+                "type": "object",
+                "properties": {
+                    "balance": {
+                        "type": "number",
+                        "example": 243.32
+                    },
+                    "currency": {
+                        "type": "string",
+                        "example": "CNY"
+                    }
+                }
+            },
+            "TokenUsage": {
+                "type": "object",
+                "properties": {
+                    "month": {
+                        "type": "string",
+                        "example": "2026-05"
+                    },
+                    "by_model": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ModelToken"
+                        }
+                    }
+                }
+            },
+            "ModelToken": {
+                "type": "object",
+                "properties": {
+                    "model": {
+                        "type": "string",
+                        "example": "deepseek-chat"
+                    },
+                    "total": {
+                        "$ref": "#/components/schemas/TokenTotal"
+                    },
+                    "days": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DayToken"
+                        }
+                    }
+                }
+            },
+            "TokenTotal": {
+                "type": "object",
+                "properties": {
+                    "input_cache_hit": {
+                        "type": "integer",
+                        "example": 450000
+                    },
+                    "input_cache_miss": {
+                        "type": "integer",
+                        "example": 960000
+                    },
+                    "output": {
+                        "type": "integer",
+                        "example": 255000
+                    }
+                }
+            },
+            "DayToken": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "example": "2026-05-01"
+                    },
+                    "input_cache_hit": {
+                        "type": "integer",
+                        "example": 15000
+                    },
+                    "input_cache_miss": {
+                        "type": "integer",
+                        "example": 32000
+                    },
+                    "output": {
+                        "type": "integer",
+                        "example": 8500
+                    }
+                }
+            },
+            "CostUsage": {
+                "type": "object",
+                "properties": {
+                    "month": {
+                        "type": "string",
+                        "example": "2026-05"
+                    },
+                    "by_model": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ModelCost"
+                        }
+                    }
+                }
+            },
+            "ModelCost": {
+                "type": "object",
+                "properties": {
+                    "model": {
+                        "type": "string",
+                        "example": "deepseek-chat"
+                    },
+                    "total": {
+                        "$ref": "#/components/schemas/CostTotal"
+                    },
+                    "days": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DayCost"
+                        }
+                    }
+                }
+            },
+            "CostTotal": {
+                "type": "object",
+                "properties": {
+                    "cost": {
+                        "type": "number",
+                        "example": 15.23
+                    }
+                }
+            },
+            "DayCost": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "example": "2026-05-01"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "example": 0.52
+                    }
+                }
+            }
+        },
+        "responses": {
+            "ErrorResponse": {
+                "description": "服务器内部错误",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -7,7 +7,7 @@ build-docker:
 	docker build -t ai-balance .
 
 run-docker:
-	docker run --rm -p 8080:8080 ai-balance
+	docker run --rm -p 8080:8080 --env-file .env ai-balance
 
 run-native:
-	bash -c 'set -a && source .env && go run main.go'
+	bash -c 'set -a && source .env && go run -tags dev ./cmd/ai-balance'

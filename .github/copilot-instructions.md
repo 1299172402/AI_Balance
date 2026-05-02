@@ -8,8 +8,8 @@
 
 | 操作 | 命令 |
 |------|------|
-| 本地运行 | `go run main.go` |
-| 编译二进制 | `go build -o ai-balance .` |
+| 本地运行 | `go run -tags dev ./cmd/ai-balance` |
+| 编译二进制 | `go build -o ai-balance ./cmd/ai-balance` |
 | 构建 Docker 镜像 | `make build-docker` |
 | 构建 Docker（国内源） | `make build-docker-in-china` |
 | 运行 Docker 容器 | `make run-docker` |
@@ -17,7 +17,13 @@
 ## 📁 项目结构
 
 ```
-├── main.go                         # 入口，路由 / 和 /ping
+├── cmd/
+│   └── ai-balance/
+│       ├── main.go                 # 入口，路由 / 和 /ping
+│       ├── openapi_dev.go          # dev 编译时注册 /openapi.json
+│       └── openapi.json            # OpenAPI 3.1 规范
+├── platform/                       # 通用抽象层（接口 + 路由模板）
+├── deepseek/                       # DeepSeek 平台实现
 ├── Dockerfile                      # 多阶段构建（golang → scratch）
 ├── Makefile                        # 构建/运行快捷命令
 ├── go.mod                          # Go 模块定义
@@ -29,7 +35,8 @@
 │   └── memory/                     # 开发备忘
 │       ├── go_environment.md       # Go 环境与命令
 │       ├── docker_deploy.md        # Docker 本地构建
-│       └── ci_cd.md                # GitHub Actions 工作流
+│       ├── ci_cd.md                # GitHub Actions 工作流
+│       └── platform_architecture.md # Platform 抽象架构
 ```
 
 ## 📐 Docker 构建要点

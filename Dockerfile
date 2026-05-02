@@ -17,7 +17,7 @@ RUN go mod download
 
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -ldflags="-s -w" -o /app/ai-balance .
+    go build -ldflags="-s -w" -o /app/ai-balance ./cmd/ai-balance
 
 # ---- Stage 2: 运行 ----
 # scratch 是 Docker 最精简的空镜像，0 文件

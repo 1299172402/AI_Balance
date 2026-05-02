@@ -35,6 +35,11 @@ main.go 中调用 `platform.RegisterRoutes(mux, client)` 即可注册三个端�
 - usage/tokens: `{ month, by_model: [{ model, total: {input_cache_hit,...}, days: [{date,...}] }] }`
 - usage/cost: `{ month, by_model: [{ model, total: {cost}, days: [{date, cost}] }] }`
 
+## OpenAPI 规范
+
+- `openapi.json` — OpenAPI 3.1 规范文件，通过 `go:embed` 嵌入
+- 端点 `GET /openapi.json` 返回该文件，可供 Scalar/Swagger UI 加载
+
 ## 接入新平台
 
 1. 新建目录如 `xiaomi/`

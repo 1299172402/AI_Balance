@@ -9,6 +9,9 @@ import (
 	"github.com/1299172402/AI_Balance/platform"
 )
 
+// 默认为 nil，由 openapi_dev.go 在 dev 编译时赋值
+var openAPIHandler func(w http.ResponseWriter, r *http.Request)
+
 // Response 通用响应结构体
 type Response struct {
 	Code    int         `json:"code"`
@@ -31,17 +34,21 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Response{
 		Code:    0,
 		Message: "pong",
-		Data:    nil, // Go 的 nil 会被序列化为 JSON 的 null
+		Data:    nil,
 	})
 }
 
 func main() {
-	// 使用显式 ServeMux，支持 Go 1.22+ 的增强路由模式
 	mux := http.NewServeMux()
 
 	// 注册基础路由
 	mux.HandleFunc("/", rootHandler)
 	mux.HandleFunc("GET /ping", pingHandler)
+
+	// 仅 dev 编译时注册 /openapi.json
+	if openAPIHandler != nil {
+		mux.HandleFunc("GET /openapi.json", openAPIHandler)
+	}
 
 	// 注册平台子路由（deepseek）
 	deepseekClient := deepseek.NewClient()

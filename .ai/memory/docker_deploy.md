@@ -11,7 +11,7 @@
 | `make build-docker` | 构建镜像（默认源） |
 | `make build-docker-in-china` | 构建镜像（清华 apk 源） |
 | `make run-docker` | 运行容器（前台，`Ctrl+C` 退出） |
-| `make run-native` | 本地直接 `go run main.go` |
+| `make run-native` | 本地直接 `go run -tags dev ./cmd/ai-balance` |
 
 ## 镜像拉取
 
