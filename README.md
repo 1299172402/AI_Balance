@@ -11,13 +11,14 @@
 
 ## 🚀 快速开始
 
+### 本地运行
+
 ```bash
-# 克隆仓库
-git clone https://github.com/your-username/AI_Balance.git
+git clone https://github.com/1299172402/AI_Balance.git
 cd AI_Balance
 
-# 启动服务
-go run main.go
+make run-native
+# 或: go run main.go
 ```
 
 服务默认在 `http://localhost:8080` 启动。

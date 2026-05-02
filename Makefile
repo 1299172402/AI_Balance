@@ -1,0 +1,13 @@
+build-docker-in-china:
+	docker build \
+	--build-arg APK_MIRROR=mirrors.tuna.tsinghua.edu.cn \
+	-t ai-balance .
+
+build-docker:
+	docker build -t ai-balance .
+
+run-docker:
+	docker run --rm -p 8080:8080 ai-balance
+
+run-native:
+	go run main.go
