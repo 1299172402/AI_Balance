@@ -9,7 +9,6 @@
 ## 📌 已经接入的 AI 平台
 
 - DeepSeek
-- XiaoMi MiMo
 
 ## 🚀 快速开始
 
